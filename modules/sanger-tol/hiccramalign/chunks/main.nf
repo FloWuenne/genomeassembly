@@ -28,7 +28,7 @@ process HICCRAMALIGN_CHUNKS {
 
         return [ lower, upper ]
     }
-    def versions_file = new file("${task.workDir}/versions.yml")
+    def versions_file = file("${task.workDir}/versions.yml")
     versions_file.write(
         """
         HICCRAMALIGN_CHUNKS:
