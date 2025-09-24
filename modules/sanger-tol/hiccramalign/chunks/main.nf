@@ -1,10 +1,8 @@
 process HICCRAMALIGN_CHUNKS {
     label "process_single"
-    executor "local"
 
     input:
-    // Native processes can't take path values as inputs
-    tuple val(meta), val(cram), val(crai)
+    tuple val(meta), path(cram), path(crai)
     val cram_bin_size
 
     output:
@@ -14,11 +12,11 @@ process HICCRAMALIGN_CHUNKS {
     when:
     task.ext.when == null || task.ext.when
 
-    exec:
+    script:
     // Note: Manually bump version number when updating module
     def VERSION = "1.0.1"
 
-    def n_slices = file(crai).countLines(decompress: true) - 1
+    def n_slices = crai.countLines(decompress: true) - 1
     def size     = cram_bin_size
     def n_bins   = n_slices.intdiv(size)
     chunkn       = (0..n_bins).collect()
@@ -28,11 +26,11 @@ process HICCRAMALIGN_CHUNKS {
 
         return [ lower, upper ]
     }
-    def versions_file = file("${task.workDir}/versions.yml")
-    versions_file.write(
-        """
-        HICCRAMALIGN_CHUNKS:
-            hiccramalign_chunks: ${VERSION}
-        """
-    )
+
+    """
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        hiccramalign_chunks: ${VERSION}
+    END_VERSIONS
+    """
 }
