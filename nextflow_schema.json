@@ -178,7 +178,8 @@
                     "description": "The minimum contig length to be considered by YaHS for scaffolding.",
                     "help_text": "YaHS can only handle up to 45,000 contigs. If you have more, you can adjust the number of contigs going into YaHS by setting a length threshold."
                 }
-            }
+            },
+            "required": ["yahs_resolutions", "yahs_min_contig_length"]
         },
         "contact_map_options": {
             "title": "Contact map options",

@@ -29,7 +29,7 @@ process HICCRAMALIGN_CHUNKS {
 
     """
     cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
+    HICCRAMALIGN_CHUNKS:
         hiccramalign_chunks: ${VERSION}
     END_VERSIONS
     """
